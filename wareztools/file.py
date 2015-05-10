@@ -11,6 +11,7 @@ class WarezFile():
     def __init__(self, filename):
         self.__file = filename
         self.filename = os.path.basename(filename)
+        self.path = os.path.dirname(filename)
 
     def remove_group(self):
         self.filename = re.sub(r"\-.*?(\.\w{3})\Z", r"\1", self.filename)
