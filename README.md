@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rahul0705/warez-tools.svg?branch=develop)](https://travis-ci.org/rahul0705/warez-tools)
+
 Warez-Tools
 ---
 
