@@ -94,7 +94,7 @@ class TestWarezFile(unittest.TestCase):
                          test_filename_movie,
                          msg="Movie file changed")
 
-    def testFixeShowExtraDots(self):
+    def testFixShowExtraDots(self):
         #Test for 1 episode (Lowercase)
         test_filename_sXXdoteXX = "test.tv.show.s01.e01.resolution.txt"
         test_filename_sXXeXX = "test.tv.show.s01e01.resolution.txt"
