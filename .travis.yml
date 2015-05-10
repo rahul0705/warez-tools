@@ -15,6 +15,7 @@ before_install:
 install:
   # Install wareztool
   - sudo apt-get install pylint -qq
+  - pip install pylint
   - pip install .
 
 script:
