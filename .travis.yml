@@ -19,7 +19,7 @@ install:
 
 script:
   # Test for Syntax
-  - coverage run --source=wareztools tests setup.py
+  - coverage run --source=wareztools setup.py test
   - nosetests
 
 after_success:
