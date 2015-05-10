@@ -20,4 +20,4 @@ install:
 script:
   # Test for Syntax
   - nosetests
-  - pylint
+  - pylint wareztools tests
