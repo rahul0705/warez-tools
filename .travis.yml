@@ -13,7 +13,8 @@ before_install:
   - sudo apt-get update -qq
 
 install:
-  # Install Ansible.
+  # Install wareztool
+  - pip install pylint
   - pip install .
 
 script:

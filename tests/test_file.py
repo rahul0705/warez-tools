@@ -32,8 +32,15 @@ class TestWarezFile(unittest.TestCase):
     def test_remove_group_no_change(self):
         """Test to check that a groupless file does not get changed
         """
-        #Test to make sure if there is no group the filename does not change
-        test_filename_without_group = "test.file.name.with.no.group.txt"
+        test_filename_without_group = "test.file.name.with.no.group.mp4"
+        warezfile = WarezFile(os.path.join(self.temp_dir,
+                                           test_filename_without_group))
+        warezfile.remove_group()
+        self.assertEqual(os.path.basename(warezfile.filename),
+                         test_filename_without_group,
+                         msg="Filename changed")
+
+        test_filename_without_group = "TEST.FILE.NAME.WITH.NO.GROUP.MP4"
         warezfile = WarezFile(os.path.join(self.temp_dir,
                                            test_filename_without_group))
         warezfile.remove_group()
@@ -44,9 +51,19 @@ class TestWarezFile(unittest.TestCase):
     def test_remove_group_with_group(self):
         """Test conversion of -XXXXXXX.ext to .ext
         """
-        #Test to make sure if there is a group it will remove it
-        test_filename_with_group = "test.file.name.with.group-GROUPNAME.txt"
-        test_filename_without_group = "test.file.name.with.group.txt"
+        #Lowercase
+        test_filename_with_group = "test.file.name.with.group-groupname.mp4"
+        test_filename_without_group = "test.file.name.with.group.mp4"
+        warezfile = WarezFile(os.path.join(self.temp_dir,
+                                           test_filename_with_group))
+        warezfile.remove_group()
+        self.assertEqual(os.path.basename(warezfile.filename),
+                         test_filename_without_group,
+                         msg="Group was not removed")
+
+        #Uppercase
+        test_filename_with_group = "TEST.FILE.NAME.WITH.GROUP-GROUPNAME.MP4"
+        test_filename_without_group = "TEST.FILE.NAME.WITH.GROUP.MP4"
         warezfile = WarezFile(os.path.join(self.temp_dir,
                                            test_filename_with_group))
         warezfile.remove_group()
@@ -58,7 +75,7 @@ class TestWarezFile(unittest.TestCase):
         """Test to check properly formatted files don't change
         """
         #Test correctly formatted file (Lowercase)
-        test_filename_sxxexx = "test.tv.show.s01e01.resolution.txt"
+        test_filename_sxxexx = "test.tv.show.s01e01.resolution.mp4"
         warezfile = WarezFile(os.path.join(self.temp_dir,
                                            test_filename_sxxexx))
         warezfile.fix_show()
@@ -67,7 +84,7 @@ class TestWarezFile(unittest.TestCase):
                          msg="Filename changed")
 
         #Test correctly formatted file (Uppercase)
-        test_filename_sxxexx = "test.tv.show.S01E01.resolution.txt"
+        test_filename_sxxexx = "test.tv.show.S01E01.resolution.mp4"
         warezfile = WarezFile(os.path.join(self.temp_dir,
                                            test_filename_sxxexx))
         warezfile.fix_show()
@@ -77,7 +94,7 @@ class TestWarezFile(unittest.TestCase):
 
 
         #Test correctly formatted file (Lowercase)
-        test_filename_sxxexxexx = "test.tv.show.s01e01e02.resolution.txt"
+        test_filename_sxxexxexx = "test.tv.show.s01e01e02.resolution.mp4"
         warezfile = WarezFile(os.path.join(self.temp_dir,
                                            test_filename_sxxexxexx))
         warezfile.fix_show()
@@ -86,7 +103,7 @@ class TestWarezFile(unittest.TestCase):
                          msg="Filename changed")
 
         #Test correctly formatted file (Uppercase)
-        test_filename_sxxexxexx = "test.tv.show.S01E01E02.resolution.txt"
+        test_filename_sxxexxexx = "test.tv.show.S01E01E02.resolution.mp4"
         warezfile = WarezFile(os.path.join(self.temp_dir,
                                            test_filename_sxxexxexx))
         warezfile.fix_show()
@@ -95,7 +112,7 @@ class TestWarezFile(unittest.TestCase):
                          msg="Filename changed")
 
         #Test Movie
-        test_filename_movie = "test.movie.2015.resolution.txt"
+        test_filename_movie = "test.movie.2015.resolution.mp4"
         warezfile = WarezFile(os.path.join(self.temp_dir, test_filename_movie))
         warezfile.fix_show()
         self.assertEqual(os.path.basename(warezfile.filename),
@@ -106,8 +123,8 @@ class TestWarezFile(unittest.TestCase):
         """Test conversion of sSS.eEE or sSS.eEE.eEE to sSSeEE or sSSeEEeEE
         """
         #Test for 1 episode (Lowercase)
-        test_filename_sxxdotexx = "test.tv.show.s01.e01.resolution.txt"
-        test_filename_sxxexx = "test.tv.show.s01e01.resolution.txt"
+        test_filename_sxxdotexx = "test.tv.show.s01.e01.resolution.mp4"
+        test_filename_sxxexx = "test.tv.show.s01e01.resolution.mp4"
         warezfile = WarezFile(os.path.join(self.temp_dir,
                                            test_filename_sxxdotexx))
         warezfile.fix_show()
@@ -116,8 +133,8 @@ class TestWarezFile(unittest.TestCase):
                          msg="sXX.eXX was not converted to sXXeXX")
 
         #Test for 1 episode (Uppercase)
-        test_filename_sxxdotexx = "test.tv.show.S01.E01.resolution.txt"
-        test_filename_sxxexx = "test.tv.show.S01E01.resolution.txt"
+        test_filename_sxxdotexx = "test.tv.show.S01.E01.resolution.mp4"
+        test_filename_sxxexx = "test.tv.show.S01E01.resolution.mp4"
         warezfile = WarezFile(os.path.join(self.temp_dir,
                                            test_filename_sxxdotexx))
         warezfile.fix_show()
@@ -127,8 +144,8 @@ class TestWarezFile(unittest.TestCase):
 
         #Test for 2 episodes (Lowercase)
         test_filename_sxxdotexxdotexx = ("test.tv.show.s01."
-                                         "e01.e02.resolution.txt")
-        test_filename_sxxexxexx = "test.tv.show.s01e01e02.resolution.txt"
+                                         "e01.e02.resolution.mp4")
+        test_filename_sxxexxexx = "test.tv.show.s01e01e02.resolution.mp4"
         warezfile = WarezFile(os.path.join(self.temp_dir,
                                            test_filename_sxxdotexxdotexx))
         warezfile.fix_show()
@@ -138,8 +155,8 @@ class TestWarezFile(unittest.TestCase):
 
         #Test for 2 episodes (Uppercase)
         test_filename_sxxdotexxdotexx = ("test.tv.show.S01."
-                                         "E01.E02.resolution.txt")
-        test_filename_sxxexxexx = "test.tv.show.S01E01E02.resolution.txt"
+                                         "E01.E02.resolution.mp4")
+        test_filename_sxxexxexx = "test.tv.show.S01E01E02.resolution.mp4"
         warezfile = WarezFile(os.path.join(self.temp_dir,
                                            test_filename_sxxdotexxdotexx))
         warezfile.fix_show()
@@ -151,8 +168,8 @@ class TestWarezFile(unittest.TestCase):
         """Test conversion between XXX or XXXXX to sSSeEE or sSSeEEeEE
         """
         #Test for 3 digit number
-        test_filename_xxx = "test.tv.show.101.resolution.txt"
-        test_filename_sxxexx = "test.tv.show.s01e01.resolution.txt"
+        test_filename_xxx = "test.tv.show.101.resolution.mp4"
+        test_filename_sxxexx = "test.tv.show.s01e01.resolution.mp4"
         warezfile = WarezFile(os.path.join(self.temp_dir, test_filename_xxx))
         warezfile.fix_show()
         self.assertEqual(os.path.basename(warezfile.filename),
@@ -160,8 +177,8 @@ class TestWarezFile(unittest.TestCase):
                          msg="XXX was not converted to sXXeXX")
 
         #Test for 5 digit number
-        test_filename_xxxxx = "test.tv.show.10102.resolution.txt"
-        test_filename_sxxexxexx = "test.tv.show.s01e01e02.resolution.txt"
+        test_filename_xxxxx = "test.tv.show.10102.resolution.mp4"
+        test_filename_sxxexxexx = "test.tv.show.s01e01e02.resolution.mp4"
         warezfile = WarezFile(os.path.join(self.temp_dir, test_filename_xxxxx))
         warezfile.fix_show()
         self.assertEqual(os.path.basename(warezfile.filename),
