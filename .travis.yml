@@ -14,8 +14,13 @@ before_install:
 
 install:
   # Install wareztool
+  - pip install coveralls
   - pip install .
 
 script:
   # Test for Syntax
+  - coverage run --source=wareztools tests setup.py
   - nosetests
+
+after_success:
+  - coveralls
