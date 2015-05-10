@@ -4,7 +4,7 @@ author: Rahul Mohandas
 import re
 import os
 
-class WarezFile():
+class WarezFile(object):
     """Warez File Object
     """
 
@@ -14,9 +14,13 @@ class WarezFile():
         self.path = os.path.dirname(filename)
 
     def remove_group(self):
+        """Remove the scene group for the name of the file
+        """
         self.filename = re.sub(r"\-.*?(\.\w{3})\Z", r"\1", self.filename)
 
     def fix_show(self):
+        """Fix the show format so it match .*.sSSeEE[eEE]..*
+        """
         #Handle .SEE. or .SEEEE. to .sSeEE. or .sSeEEEE.
         self.filename = re.sub(r"\.(\d)((\d{2}){1,2})\.",
                                r".s\g<1>e\g<2>.",
