@@ -49,7 +49,7 @@ class TestWarezFile(unittest.TestCase):
                          msg="Filename changed")
 
     def test_remove_group_with_group(self):
-        """Test conversion of -XXXXXXX.ext to .ext
+        """Test removal of scene group
         """
         #Lowercase
         test_filename_with_group = "test.file.name.with.group-groupname.mp4"
@@ -130,7 +130,7 @@ class TestWarezFile(unittest.TestCase):
         warezfile.fix_show()
         self.assertEqual(os.path.basename(warezfile.filename),
                          test_filename_sxxexx,
-                         msg="sXX.eXX was not converted to sXXeXX")
+                         msg="sSS.eEE was not converted to sSSeEE")
 
         #Test for 1 episode (Uppercase)
         test_filename_sxxdotexx = "test.tv.show.S01.E01.resolution.mp4"
@@ -151,7 +151,7 @@ class TestWarezFile(unittest.TestCase):
         warezfile.fix_show()
         self.assertEqual(os.path.basename(warezfile.filename),
                          test_filename_sxxexxexx,
-                         msg="sXX.eXX.eXX was not converted to sXXeXXeXX")
+                         msg="sSS.eEE.eEE was not converted to sSSeEEeEE")
 
         #Test for 2 episodes (Uppercase)
         test_filename_sxxdotexxdotexx = ("test.tv.show.S01."
@@ -162,10 +162,10 @@ class TestWarezFile(unittest.TestCase):
         warezfile.fix_show()
         self.assertEqual(os.path.basename(warezfile.filename),
                          test_filename_sxxexxexx,
-                         msg="sXX.eXX.eXX was not converted to sXXeXXeXX")
+                         msg="sSS.eEE.eEE was not converted to sSSeEEeEE")
 
     def test_fix_show_numbers_only(self):
-        """Test conversion between XXX or XXXXX to sSSeEE or sSSeEEeEE
+        """Test conversion of SEE or SEEEE to sSSeEE or sSSeEEeEE
         """
         #Test for 3 digit number
         test_filename_xxx = "test.tv.show.101.resolution.mp4"
@@ -174,7 +174,7 @@ class TestWarezFile(unittest.TestCase):
         warezfile.fix_show()
         self.assertEqual(os.path.basename(warezfile.filename),
                          test_filename_sxxexx,
-                         msg="XXX was not converted to sXXeXX")
+                         msg="SEE was not converted to s0SeEE")
 
         #Test for 5 digit number
         test_filename_xxxxx = "test.tv.show.10102.resolution.mp4"
@@ -183,7 +183,7 @@ class TestWarezFile(unittest.TestCase):
         warezfile.fix_show()
         self.assertEqual(os.path.basename(warezfile.filename),
                          test_filename_sxxexxexx,
-                         msg="XXXXX was not converted to sXXeXXeXX")
+                         msg="SEEEE was not converted to s0SeEEeSS")
 
 if __name__ == "__main__":
     unittest.main()
