@@ -70,7 +70,7 @@ class TestWarezFile(unittest.TestCase):
                              "Group was not removed")
 
     def test_fix_show_no_change_one_episode(self):
-        """Test to check properly formatted files don't change
+        """Test to check properly formatted files do not change
         """
         #Test correctly formatted file
         test_filenames = ["test.tv.show.s01e01.resolution.mp4"]
@@ -91,7 +91,7 @@ class TestWarezFile(unittest.TestCase):
                                                          warezfile.filename))
 
     def test_fix_show_no_change_two_episodes(self):
-        """Test to check properly formatted files don't change
+        """Test to check properly formatted files do not change
         """
         #Test correctly formatted file
         test_filenames = ["test.tv.show.s01e01e02.resolution.mp4"]
@@ -194,6 +194,123 @@ class TestWarezFile(unittest.TestCase):
             self.assertEqual(os.path.basename(warezfile.filename),
                              test_filename["correct"],
                              msg="SEEEE was not converted to s0SeEEeSS")
+
+    def test_remove_proper_no_change(self):
+        """Test to check that a file with no proper does not change
+        """
+        test_filenames = ["test.tv.show.s01e01.resolution.mp4"]
+        for test_filename in test_filenames:
+            warezfile = WarezFile(os.path.join(self.temp_dir,
+                                               test_filename.lower()))
+            warezfile.remove_proper()
+            self.assertEqual(os.path.basename(warezfile.filename),
+                             test_filename.lower(),
+                             "{0} changed to {1}".format(test_filename.lower(),
+                             warezfile.filename))
+            warezfile = WarezFile(os.path.join(self.temp_dir,
+                                               test_filename.upper()))
+            warezfile.remove_proper()
+            self.assertEqual(os.path.basename(warezfile.filename),
+                             test_filename.upper(),
+                             "{0} changed to {1}".format(test_filename.upper(),
+                             warezfile.filename))
+
+    def test_remove_proper_with_proper(self):
+        """Test the removal of proper in filename
+        """
+        test_filenames = [{"test":"test.tv.show.s01e01.proper.resolution.mp4",
+                           "correct":"test.tv.show.s01e01.resolution.mp4"}]
+        for test_filename in test_filenames:
+            warezfile = WarezFile(os.path.join(self.temp_dir,
+                                               test_filename["test"].lower()))
+            warezfile.remove_proper()
+            self.assertEqual(os.path.basename(warezfile.filename),
+                             test_filename["correct"].lower(),
+                             msg="proper was not removed")
+            warezfile = WarezFile(os.path.join(self.temp_dir,
+                                               test_filename["test"].upper()))
+            warezfile.remove_proper()
+            self.assertEqual(os.path.basename(warezfile.filename),
+                             test_filename["correct"].upper(),
+                             msg="PROPER was not removed")
+
+    def test_remove_repack_no_change(self):
+        """Test to check that a file with no repack does not change
+        """
+        test_filenames = ["test.tv.show.s01e01.resolution.mp4"]
+        for test_filename in test_filenames:
+            warezfile = WarezFile(os.path.join(self.temp_dir,
+                                               test_filename.lower()))
+            warezfile.remove_repack()
+            self.assertEqual(os.path.basename(warezfile.filename),
+                             test_filename.lower(),
+                             "{0} changed to {1}".format(test_filename.lower(),
+                             warezfile.filename))
+            warezfile = WarezFile(os.path.join(self.temp_dir,
+                                               test_filename.upper()))
+            warezfile.remove_repack()
+            self.assertEqual(os.path.basename(warezfile.filename),
+                             test_filename.upper(),
+                             "{0} changed to {1}".format(test_filename.upper(),
+                             warezfile.filename))
+
+    def test_remove_repack_with_proper(self):
+        """Test the removal of repack in filename
+        """
+        test_filenames = [{"test":"test.tv.show.s01e01.repack.resolution.mp4",
+                           "correct":"test.tv.show.s01e01.resolution.mp4"}]
+        for test_filename in test_filenames:
+            warezfile = WarezFile(os.path.join(self.temp_dir,
+                                               test_filename["test"].lower()))
+            warezfile.remove_repack()
+            self.assertEqual(os.path.basename(warezfile.filename),
+                             test_filename["correct"].lower(),
+                             msg="repack was not removed")
+            warezfile = WarezFile(os.path.join(self.temp_dir,
+                                               test_filename["test"].upper()))
+            warezfile.remove_repack()
+            self.assertEqual(os.path.basename(warezfile.filename),
+                             test_filename["correct"].upper(),
+                             msg="REPACK was not removed")
+
+    def test_remove_internal_no_change(self):
+        """Test to check that a file with no internal does not change
+        """
+        test_filenames = ["test.tv.show.s01e01.resolution.mp4"]
+        for test_filename in test_filenames:
+            warezfile = WarezFile(os.path.join(self.temp_dir,
+                                               test_filename.lower()))
+            warezfile.remove_internal()
+            self.assertEqual(os.path.basename(warezfile.filename),
+                             test_filename.lower(),
+                             "{0} changed to {1}".format(test_filename.lower(),
+                             warezfile.filename))
+            warezfile = WarezFile(os.path.join(self.temp_dir,
+                                               test_filename.upper()))
+            warezfile.remove_internal()
+            self.assertEqual(os.path.basename(warezfile.filename),
+                             test_filename.upper(),
+                             "{0} changed to {1}".format(test_filename.upper(),
+                             warezfile.filename))
+
+    def test_remove_internal_with_proper(self):
+        """Test the removal of internal in filename
+        """
+        test_filenames = [{"test":"test.tv.show.s01e01.internal.resolution.mp4",
+                           "correct":"test.tv.show.s01e01.resolution.mp4"}]
+        for test_filename in test_filenames:
+            warezfile = WarezFile(os.path.join(self.temp_dir,
+                                               test_filename["test"].lower()))
+            warezfile.remove_internal()
+            self.assertEqual(os.path.basename(warezfile.filename),
+                             test_filename["correct"].lower(),
+                             msg="internal was not removed")
+            warezfile = WarezFile(os.path.join(self.temp_dir,
+                                               test_filename["test"].upper()))
+            warezfile.remove_internal()
+            self.assertEqual(os.path.basename(warezfile.filename),
+                             test_filename["correct"].upper(),
+                             msg="INTERNAL was not removed")
 
 if __name__ == "__main__":
     unittest.main()

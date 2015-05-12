@@ -14,9 +14,33 @@ class WarezFile(object):
         self.path = os.path.dirname(filename)
 
     def remove_group(self):
-        """Remove the scene group for the name of the file
+        """Remove the scene group from the name of the file
         """
         self.filename = re.sub(r"\-.*?(\.\w{3})\Z", r"\1", self.filename)
+
+    def remove_proper(self):
+        """Remove the proper tag from the name of the file
+        """
+        self.filename = re.sub(r"proper\.",
+                               r"",
+                               self.filename,
+                               flags=re.IGNORECASE)
+
+    def remove_repack(self):
+        """Remove the repack tag from the name of the file
+        """
+        self.filename = re.sub(r"repack\.",
+                               r"",
+                               self.filename,
+                               flags=re.IGNORECASE)
+
+    def remove_internal(self):
+        """Remove the internal tag from the name of the file
+        """
+        self.filename = re.sub(r"internal\.",
+                               r"",
+                               self.filename,
+                               flags=re.IGNORECASE)
 
     def fix_show(self):
         """Fix the show format so it match .*.sSSeEE[eEE]..*
