@@ -313,7 +313,7 @@ class TestWarezFile(unittest.TestCase):
                              msg="INTERNAL was not removed")
 
     def test_move_to_movie(self):
-        """Test the removal of internal in filename
+        """Test the move to movie directory
         """
         test_filenames = [{"test":"test.movie.resolution.mp4",
                            "correct":"movie/test.movie.resolution.mp4"}]
@@ -327,7 +327,7 @@ class TestWarezFile(unittest.TestCase):
                              msg="not moved to movie folder")
 
     def test_move_to_tv(self):
-        """Test the removal of internal in filename
+        """Test the move to tv directory
         """
         test_filenames = [{"test":"test.tv.s01e01.resolution.mp4",
                            "correct":"tv/test.tv.s01e01.resolution.mp4"}]
@@ -341,7 +341,7 @@ class TestWarezFile(unittest.TestCase):
                              msg="not moved to tv folder")
 
     def test_all_functions(self):
-        """Test the removal of internal in filename
+        """Test all functions together
         """
         test_filenames = [{"test":("test.tv.s01.e01."
                                    "resolution.internal-GROUP.mp4"),
