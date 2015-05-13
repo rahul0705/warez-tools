@@ -340,5 +340,58 @@ class TestWarezFile(unittest.TestCase):
                                           test_filename["correct"]),
                              msg="not moved to tv folder")
 
+    def test_all_functions(self):
+        """Test the removal of internal in filename
+        """
+        test_filenames = [{"test":("test.tv.s01.e01."
+                                   "resolution.internal-GROUP.mp4"),
+                           "correct":"test.tv.s01e01.resolution.mp4"},
+                          {"test":("test.tv.s01.e01."
+                                   "resolution.repack-GROUP.mp4"),
+                           "correct":"test.tv.s01e01.resolution.mp4"},
+                          {"test":("test.tv.s01.e01."
+                                   "resolution.proper-GROUP.mp4"),
+                           "correct":"test.tv.s01e01.resolution.mp4"},
+                          {"test":("test.tv.s01.e01.e02."
+                                   "resolution.internal-GROUP.mp4"),
+                           "correct":"test.tv.s01e01e02.resolution.mp4"},
+                          {"test":("test.tv.s01.e01.e02."
+                                   "resolution.repack-GROUP.mp4"),
+                           "correct":"test.tv.s01e01e02.resolution.mp4"},
+                          {"test":("test.tv.s01.e01.e02."
+                                   "resolution.proper-GROUP.mp4"),
+                           "correct":"test.tv.s01e01e02.resolution.mp4"},
+                          {"test":("test.tv.101."
+                                   "resolution.internal-GROUP.mp4"),
+                           "correct":"test.tv.s01e01.resolution.mp4"},
+                          {"test":("test.tv.101."
+                                   "resolution.repack-GROUP.mp4"),
+                           "correct":"test.tv.s01e01.resolution.mp4"},
+                          {"test":("test.tv.101."
+                                   "resolution.proper-GROUP.mp4"),
+                           "correct":"test.tv.s01e01.resolution.mp4"},
+                          {"test":("test.tv.10102."
+                                   "resolution.internal-GROUP.mp4"),
+                           "correct":"test.tv.s01e01e02.resolution.mp4"},
+                          {"test":("test.tv.10102."
+                                   "resolution.repack-GROUP.mp4"),
+                           "correct":"test.tv.s01e01e02.resolution.mp4"},
+                          {"test":("test.tv.10102."
+                                   "resolution.proper-GROUP.mp4"),
+                           "correct":"test.tv.s01e01e02.resolution.mp4"},]
+        for test_filename in test_filenames:
+            warezfile = WarezFile(os.path.join(self.temp_dir,
+                                               test_filename["test"].lower()))
+            warezfile.remove_group()
+            warezfile.remove_internal()
+            warezfile.remove_proper()
+            warezfile.remove_repack()
+            warezfile.fix_show()
+            self.assertEqual(os.path.join(warezfile.path, warezfile.filename),
+                             os.path.join(self.temp_dir,
+                                          test_filename["correct"]),
+                             "{0} changed to {1}".format(test_filename,
+                             warezfile.filename))
+
 if __name__ == "__main__":
     unittest.main()
