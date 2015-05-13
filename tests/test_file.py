@@ -73,7 +73,7 @@ class TestWarezFile(unittest.TestCase):
         """Test to check properly formatted files do not change
         """
         #Test correctly formatted file
-        test_filenames = ["test.tv.show.s01e01.resolution.mp4"]
+        test_filenames = ["test.tv.s01e01.resolution.mp4"]
         for test_filename in test_filenames:
             warezfile = WarezFile(os.path.join(self.temp_dir,
                                                test_filename.lower()))
@@ -94,7 +94,7 @@ class TestWarezFile(unittest.TestCase):
         """Test to check properly formatted files do not change
         """
         #Test correctly formatted file
-        test_filenames = ["test.tv.show.s01e01e02.resolution.mp4"]
+        test_filenames = ["test.tv.s01e01e02.resolution.mp4"]
         for test_filename in test_filenames:
             warezfile = WarezFile(os.path.join(self.temp_dir,
                                                test_filename.lower()))
@@ -134,8 +134,8 @@ class TestWarezFile(unittest.TestCase):
     def test_fix_show_extra_dots_one_episode(self):
         """Test conversion of sSS.eEE to sSSeEE
         """
-        test_filenames = [{"test":"test.tv.show.s01.e01.resolution.mp4",
-                           "correct":"test.tv.show.s01e01.resolution.mp4"}]
+        test_filenames = [{"test":"test.tv.s01.e01.resolution.mp4",
+                           "correct":"test.tv.s01e01.resolution.mp4"}]
         for test_filename in test_filenames:
             warezfile = WarezFile(os.path.join(self.temp_dir,
                                                test_filename["test"].lower()))
@@ -153,8 +153,8 @@ class TestWarezFile(unittest.TestCase):
     def test_fix_show_extra_dots_two_episodes(self):
         """Test conversion of sSS.eEE.eEE to sSSeEEeEE
         """
-        test_filenames = [{"test":"test.tv.show.s01.e01.e02.resolution.mp4",
-                           "correct":"test.tv.show.s01e01e02.resolution.mp4"}]
+        test_filenames = [{"test":"test.tv.s01.e01.e02.resolution.mp4",
+                           "correct":"test.tv.s01e01e02.resolution.mp4"}]
         for test_filename in test_filenames:
             warezfile = WarezFile(os.path.join(self.temp_dir,
                                                test_filename["test"].lower()))
@@ -172,8 +172,8 @@ class TestWarezFile(unittest.TestCase):
     def test_fix_show_numbers_only_one_episode(self):
         """Test conversion of SEE to sSSeEE
         """
-        test_filenames = [{"test":"test.tv.show.101.resolution.mp4",
-                           "correct":"test.tv.show.s01e01.resolution.mp4"}]
+        test_filenames = [{"test":"test.tv.101.resolution.mp4",
+                           "correct":"test.tv.s01e01.resolution.mp4"}]
         for test_filename in test_filenames:
             warezfile = WarezFile(os.path.join(self.temp_dir,
                                                test_filename["test"]))
@@ -185,8 +185,8 @@ class TestWarezFile(unittest.TestCase):
     def test_fix_show_numbers_only_two_episodes(self):
         """Test conversion of SEEEE to sSSeEEeEE
         """
-        test_filenames = [{"test":"test.tv.show.10102.resolution.mp4",
-                           "correct":"test.tv.show.s01e01e02.resolution.mp4"}]
+        test_filenames = [{"test":"test.tv.10102.resolution.mp4",
+                           "correct":"test.tv.s01e01e02.resolution.mp4"}]
         for test_filename in test_filenames:
             warezfile = WarezFile(os.path.join(self.temp_dir,
                                   test_filename["test"]))
@@ -198,7 +198,7 @@ class TestWarezFile(unittest.TestCase):
     def test_remove_proper_no_change(self):
         """Test to check that a file with no proper does not change
         """
-        test_filenames = ["test.tv.show.s01e01.resolution.mp4"]
+        test_filenames = ["test.tv.s01e01.resolution.mp4"]
         for test_filename in test_filenames:
             warezfile = WarezFile(os.path.join(self.temp_dir,
                                                test_filename.lower()))
@@ -218,8 +218,8 @@ class TestWarezFile(unittest.TestCase):
     def test_remove_proper_with_proper(self):
         """Test the removal of proper in filename
         """
-        test_filenames = [{"test":"test.tv.show.s01e01.proper.resolution.mp4",
-                           "correct":"test.tv.show.s01e01.resolution.mp4"}]
+        test_filenames = [{"test":"test.tv.s01e01.proper.resolution.mp4",
+                           "correct":"test.tv.s01e01.resolution.mp4"}]
         for test_filename in test_filenames:
             warezfile = WarezFile(os.path.join(self.temp_dir,
                                                test_filename["test"].lower()))
@@ -237,7 +237,7 @@ class TestWarezFile(unittest.TestCase):
     def test_remove_repack_no_change(self):
         """Test to check that a file with no repack does not change
         """
-        test_filenames = ["test.tv.show.s01e01.resolution.mp4"]
+        test_filenames = ["test.tv.s01e01.resolution.mp4"]
         for test_filename in test_filenames:
             warezfile = WarezFile(os.path.join(self.temp_dir,
                                                test_filename.lower()))
@@ -257,8 +257,8 @@ class TestWarezFile(unittest.TestCase):
     def test_remove_repack_with_proper(self):
         """Test the removal of repack in filename
         """
-        test_filenames = [{"test":"test.tv.show.s01e01.repack.resolution.mp4",
-                           "correct":"test.tv.show.s01e01.resolution.mp4"}]
+        test_filenames = [{"test":"test.tv.s01e01.repack.resolution.mp4",
+                           "correct":"test.tv.s01e01.resolution.mp4"}]
         for test_filename in test_filenames:
             warezfile = WarezFile(os.path.join(self.temp_dir,
                                                test_filename["test"].lower()))
@@ -276,7 +276,7 @@ class TestWarezFile(unittest.TestCase):
     def test_remove_internal_no_change(self):
         """Test to check that a file with no internal does not change
         """
-        test_filenames = ["test.tv.show.s01e01.resolution.mp4"]
+        test_filenames = ["test.tv.s01e01.resolution.mp4"]
         for test_filename in test_filenames:
             warezfile = WarezFile(os.path.join(self.temp_dir,
                                                test_filename.lower()))
@@ -296,8 +296,8 @@ class TestWarezFile(unittest.TestCase):
     def test_remove_internal_with_proper(self):
         """Test the removal of internal in filename
         """
-        test_filenames = [{"test":"test.tv.show.s01e01.internal.resolution.mp4",
-                           "correct":"test.tv.show.s01e01.resolution.mp4"}]
+        test_filenames = [{"test":"test.tv.s01e01.internal.resolution.mp4",
+                           "correct":"test.tv.s01e01.resolution.mp4"}]
         for test_filename in test_filenames:
             warezfile = WarezFile(os.path.join(self.temp_dir,
                                                test_filename["test"].lower()))
@@ -311,6 +311,34 @@ class TestWarezFile(unittest.TestCase):
             self.assertEqual(os.path.basename(warezfile.filename),
                              test_filename["correct"].upper(),
                              msg="INTERNAL was not removed")
+
+    def test_move_to_movie(self):
+        """Test the removal of internal in filename
+        """
+        test_filenames = [{"test":"test.movie.resolution.mp4",
+                           "correct":"movie/test.movie.resolution.mp4"}]
+        for test_filename in test_filenames:
+            warezfile = WarezFile(os.path.join(self.temp_dir,
+                                               test_filename["test"].lower()))
+            warezfile.move_to_movie()
+            self.assertEqual(os.path.join(warezfile.path, warezfile.filename),
+                             os.path.join(self.temp_dir,
+                                          test_filename["correct"]),
+                             msg="not moved to movie folder")
+
+    def test_move_to_tv(self):
+        """Test the removal of internal in filename
+        """
+        test_filenames = [{"test":"test.tv.s01e01.resolution.mp4",
+                           "correct":"tv/test.tv.s01e01.resolution.mp4"}]
+        for test_filename in test_filenames:
+            warezfile = WarezFile(os.path.join(self.temp_dir,
+                                               test_filename["test"].lower()))
+            warezfile.move_to_tv()
+            self.assertEqual(os.path.join(warezfile.path, warezfile.filename),
+                             os.path.join(self.temp_dir,
+                                          test_filename["correct"]),
+                             msg="not moved to tv folder")
 
 if __name__ == "__main__":
     unittest.main()

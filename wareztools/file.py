@@ -42,6 +42,16 @@ class WarezFile(object):
                                self.filename,
                                flags=re.IGNORECASE)
 
+    def move_to_movie(self):
+        """Move a file into the movie directory
+        """
+        self.path = os.path.join(self.path, "movie")
+
+    def move_to_tv(self):
+        """Move a file into the tv directory
+        """
+        self.path = os.path.join(self.path, "tv")
+
     def fix_show(self):
         """Fix the show format so it match .*.sSSeEE[eEE]..*
         """
