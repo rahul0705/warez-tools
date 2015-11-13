@@ -1,3 +1,7 @@
+"""
+author: Rahul Mohandas
+"""
+
 class Scraper(object):
 
     def __init__(self, api_key=None):
