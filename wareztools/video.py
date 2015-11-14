@@ -129,9 +129,3 @@ class Video(object):
                               r"\g<1>",
                               self.__filename,
                               flags=re.IGNORECASE)
-
-if __name__ == "__main__":
-    import sys
-    wf = Video(sys.argv[1])
-    print wf.get_show_info()
-    print wf.rename_show()
