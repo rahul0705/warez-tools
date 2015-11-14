@@ -19,6 +19,7 @@ install:
 
 script:
   # Test for Syntax
+  - ls -R /usr/lib/python3.4
   - coverage run --source=wareztools setup.py test
   - nosetests
 
