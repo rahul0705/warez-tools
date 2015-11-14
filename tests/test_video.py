@@ -406,7 +406,6 @@ class TestVideo(unittest.TestCase):
             wareztools.scrapers.themoviedb.TheMovieDB.ret = False
             warezfile = self.video(os.path.join(self.temp_dir,
                                            test_filename["test"].lower()))
-            print warezfile.db.ret
             show_info = warezfile.get_show_info()
             self.assertEqual(show_info,
                              test_filename["correct"],
