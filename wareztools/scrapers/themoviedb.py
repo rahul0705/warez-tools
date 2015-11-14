@@ -5,9 +5,9 @@ import json
 import urllib
 import urllib2
 
-import wareztools.scraper
+import wareztools.scrapers.scraper
 
-class TheMovieDB(wareztools.scraper.Scraper):
+class TheMovieDB(wareztools.scrapers.scraper.Scraper):
 
     def __init__(self, api_key):
         if not api_key:
