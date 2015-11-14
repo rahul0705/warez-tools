@@ -2,8 +2,16 @@
 author: Rahul Mohandas
 """
 import json
-import urllib
-import urllib2
+try:
+    from urllib import urlencode
+    from urllib2 import urlopen
+    from urllib2 import Request
+    from urllib2 import HTTPError
+except ImportError:
+    from urllib.parse import urlencode
+    from urllib.request import urlopen
+    from urllib.request import Request
+    from urllib.error import HTTPError
 
 import wareztools.scrapers.scraper
 
@@ -29,11 +37,11 @@ class TheMovieDB(wareztools.scrapers.scraper.Scraper):
         name = self.__fix_name(name)
         self.request_args["query"] = name
         url = "{0}/search/tv".format(self.base_url)
-        url = "{0}?{1}".format(url, urllib.urlencode(self.request_args))
-        request = urllib2.Request(url, headers=self.request_headers)
+        url = "{0}?{1}".format(url, urlencode(self.request_args))
+        request = Request(url, headers=self.request_headers)
         try:
-            response_body = json.loads(urllib2.urlopen(request).read())
-        except urllib2.HTTPError:
+            response_body = json.loads(urlopen(request).read())
+        except HTTPError:
             raise
         if not response_body["total_results"]:
             raise KeyError("Nothing found")
@@ -54,12 +62,12 @@ class TheMovieDB(wareztools.scrapers.scraper.Scraper):
         url = "{0}/tv/{1}/season/{2}".format(self.base_url,
                                              self.get_show_id(name),
                                              season)
-        url = "{0}?{1}".format(url, urllib.urlencode(self.request_args))
-        request = urllib2.Request(url, headers=self.request_headers)
+        url = "{0}?{1}".format(url, urlencode(self.request_args))
+        request = Request(url, headers=self.request_headers)
         try:
-            response_body = json.loads(urllib2.urlopen(request).read())
+            response_body = json.loads(urlopen(request).read())
             return True
-        except urllib2.HTTPError:
+        except HTTPError:
             return False
 
     def validate_show_episode(self, name, season, episode):
@@ -68,12 +76,12 @@ class TheMovieDB(wareztools.scrapers.scraper.Scraper):
                                                          self.get_show_id(name),
                                                          season,
                                                          episode)
-        url = "{0}?{1}".format(url, urllib.urlencode(self.request_args))
-        request = urllib2.Request(url, headers=self.request_headers)
+        url = "{0}?{1}".format(url, urlencode(self.request_args))
+        request = Request(url, headers=self.request_headers)
         try:
-            response_body = json.loads(urllib2.urlopen(request).read())
+            response_body = json.loads(urlopen(request).read())
             return True
-        except urllib2.HTTPError:
+        except HTTPError:
             return False
 
     def get_movie_id(self, name):
@@ -81,11 +89,11 @@ class TheMovieDB(wareztools.scrapers.scraper.Scraper):
         name = self.__fix_name(name)
         self.request_args["query"] = name
         url = "{0}/search/movie".format(self.base_url)
-        url = "{0}?{1}".format(url, urllib.urlencode(self.request_args))
-        request = urllib2.Request(url, headers=self.request_headers)
+        url = "{0}?{1}".format(url, urlencode(self.request_args))
+        request = Request(url, headers=self.request_headers)
         try:
-            response_body = json.loads(urllib2.urlopen(request).read())
-        except urllib2.HTTPError:
+            response_body = json.loads(urlopen(request).read())
+        except HTTPError:
             raise
         if not response_body["total_results"]:
             raise KeyError("Nothing found")
