@@ -23,7 +23,7 @@ install:
 
 script:
   # Test for Syntax
-  - /home/travis/virtualenv/python3.3.5/lib/python3.3/site-packages
+  - ls -R /home/travis/virtualenv/python3.3.5/lib/python3.3/site-packages
   - coverage run --source=wareztools setup.py test
   - nosetests
 
