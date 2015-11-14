@@ -19,8 +19,7 @@ install:
 
 script:
   # Test for Syntax
-  - ls -R /usr/lib/python*
-  - ls -R /usr/lib64/python*
+  - /home/travis/virtualenv/python3.3.5/lib/python3.3/site-packages
   - coverage run --source=wareztools setup.py test
   - nosetests
 
