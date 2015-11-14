@@ -4,7 +4,7 @@ author: Rahul Mohandas
 import re
 import os
 
-import scrapers.themoviedb
+import wareztools.scrapers.themoviedb
 
 class Video(object):
     """Warez File Object
@@ -16,7 +16,7 @@ class Video(object):
         self.path = os.path.dirname(video)
         self.__filename = os.path.basename(os.path.splitext(video)[0])
         self.extension = os.path.splitext(video)[1]
-        self.db = scrapers.themoviedb.TheMovieDB(Video.api_key)
+        self.db = wareztools.scrapers.themoviedb.TheMovieDB(Video.api_key)
 
     @property
     def filename(self):

@@ -1,9 +1,6 @@
 ---
 language: python
 
-virtualenv:
-  system_site_packages: true
-
 python:
   #- "2.6"
   - "2.7"
@@ -23,7 +20,6 @@ install:
 
 script:
   # Test for Syntax
-  - ls -R /home/travis/virtualenv/python3.3.5/lib/python3.3/site-packages
   - coverage run --source=wareztools setup.py test
   - nosetests
 
