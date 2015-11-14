@@ -81,14 +81,6 @@ class Video(object):
                 episodes.append(episode)
         return (name, season, episodes)
 
-    def rename_show(self):
-        name, season, episodes = self.get_show_info()
-        if not name:
-            return
-        self.remove_group()
-        return os.path.join(self.path, "{0}{1}".format(self.__filename,
-                                                       self.extension))
-
     def __get_show_regex(self):
         return re.match(r"(.*)\.(s(\d{2}))((e\d{2})+)",
                         self.__filename,

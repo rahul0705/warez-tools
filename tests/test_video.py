@@ -9,6 +9,29 @@ import tempfile
 
 from wareztools.video import Video
 
+class FakeScraper(object):
+
+    def __init__(self, api_key=None):
+        pass
+
+    def get_show_id(self, name):
+        return 1
+
+    def validate_show(self, name):
+        return True
+
+    def validate_show_season(self, name, season):
+        return True
+
+    def validate_show_episode(self, name, season, episode):
+        return True
+
+    def get_movie_id(self, name):
+        return 1
+
+    def validate_movie(self, name):
+        return True
+
 class TestVideo(unittest.TestCase):
     """Test the Video class
     """
@@ -340,6 +363,36 @@ class TestVideo(unittest.TestCase):
                              os.path.join(self.temp_dir,
                                           test_filename["correct"]),
                              msg="not moved to tv folder")
+
+    def test_get_show_info_no_show(self):
+        """Test getting show info when no show info is present
+        """
+        test_filenames = [{"test":"test.movie.resolution.mp4",
+                           "correct":(None, None, [])}]
+        for test_filename in test_filenames:
+            warezfile = Video(os.path.join(self.temp_dir,
+                                           test_filename["test"].lower()))
+            warezfile.db = FakeScraper()
+            show_info = warezfile.get_show_info()
+            self.assertEqual(show_info,
+                             test_filename["correct"],
+                             msg="Show info found")
+
+    def test_get_show_info_show(self):
+        """Test getting show info when show info is present
+        """
+        test_filenames = [{"test":"test.tv.s01.e01.resolution.mp4",
+                           "correct":("test.tv", "01", ["01"])},
+                          {"test":"test.tv.s01.e01.e02.resolution.mp4",
+                           "correct":("test.tv", "01", ["01", "02"])}]
+        for test_filename in test_filenames:
+            warezfile = Video(os.path.join(self.temp_dir,
+                                           test_filename["test"].lower()))
+            warezfile.db = FakeScraper()
+            show_info = warezfile.get_show_info()
+            self.assertEqual(show_info,
+                             test_filename["correct"],
+                             msg="No show info found")
 
     def test_all_functions(self):
         """Test all functions together
