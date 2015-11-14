@@ -19,7 +19,8 @@ install:
 
 script:
   # Test for Syntax
-  - ls -R /usr/lib/python3.4
+  - ls -R /usr/lib/python*
+  - ls -R /usr/lib64/python*
   - coverage run --source=wareztools setup.py test
   - nosetests
 
