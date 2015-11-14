@@ -14,9 +14,13 @@ class Video(object):
     def __init__(self, video):
         self.__video = video
         self.path = os.path.dirname(video)
-        self.filename = os.path.basename(os.path.splitext(video)[0])
+        self.__filename = os.path.basename(os.path.splitext(video)[0])
         self.extension = os.path.splitext(video)[1]
         self.db = scrapers.themoviedb.TheMovieDB(Video.api_key)
+
+    @property
+    def filename(self):
+        return "{0}{1}".format(self.__filename, self.extension)
 
     def move_to_movie(self):
         """Move a file into the movie directory
@@ -33,37 +37,37 @@ class Video(object):
     def remove_group(self):
         """Remove the scene group from the name of the file
         """
-        self.filename = self.filename.partition("-")[0]
+        self.__filename = self.__filename.partition("-")[0]
 
     def remove_proper(self):
         """Remove the proper tag from the name of the file
         """
-        self.filename = re.sub(r"\.proper",
+        self.__filename = re.sub(r"\.proper",
                                r"",
-                               self.filename,
+                               self.__filename,
                                flags=re.IGNORECASE)
 
     def remove_repack(self):
         """Remove the repack tag from the name of the file
         """
-        self.filename = re.sub(r"\.repack",
+        self.__filename = re.sub(r"\.repack",
                                r"",
-                               self.filename,
+                               self.__filename,
                                flags=re.IGNORECASE)
 
     def remove_internal(self):
         """Remove the internal tag from the name of the file
         """
-        self.filename = re.sub(r"\.internal",
+        self.__filename = re.sub(r"\.internal",
                                r"",
-                               self.filename,
+                               self.__filename,
                                flags=re.IGNORECASE)
 
     def get_show_info(self):
         name = None
         season = None
         episodes = list()
-        original_filename = self.filename
+        original_filename = self.__filename
         self.__fix_season_episode_format()
         m = self.__get_show_regex()
         if m:
@@ -72,7 +76,7 @@ class Video(object):
             for episode in m.group(4).lower().lstrip("e").split("e"):
                 episode = episode.lstrip("e")
                 if not self.db.validate_show_episode(name, season, episode):
-                    self.filename = original_filename
+                    self.__filename = original_filename
                     return (None, None, list())
                 episodes.append(episode)
         return (name, season, episodes)
@@ -82,12 +86,12 @@ class Video(object):
         if not name:
             return
         self.remove_group()
-        return os.path.join(self.path, "{0}{1}".format(self.filename,
+        return os.path.join(self.path, "{0}{1}".format(self.__filename,
                                                        self.extension))
 
     def __get_show_regex(self):
         return re.match(r"(.*)\.(s(\d{2}))((e\d{2})+)",
-                        self.filename,
+                        self.__filename,
                         flags=re.IGNORECASE)
 
     def __fix_season_episode_format(self):
@@ -97,33 +101,33 @@ class Video(object):
             return
 
         #Handle .SEE. or .SEEEE. to .sSeEE. or .sSeEEEE.
-        self.filename = re.sub(r"\.(\d)((\d{2}){1,2})\.",
+        self.__filename = re.sub(r"\.(\d)((\d{2}){1,2})\.",
                               r".s\g<1>e\g<2>.",
-                              self.filename,
+                              self.__filename,
                               flags=re.IGNORECASE)
 
         #Handle .sS?eEE. or .sS?eEE?EE. to .s0SeEE. or .s0SeEEEE.
-        self.filename = re.sub(r"\.(s)(\d)\.?(e\d{2})\.?((\d{2})?)\.",
+        self.__filename = re.sub(r"\.(s)(\d)\.?(e\d{2})\.?((\d{2})?)\.",
                               r".\g<1>0\g<2>\g<3>\g<4>.",
-                              self.filename,
+                              self.__filename,
                               flags=re.IGNORECASE)
 
         #Handle eEEEE. to eEEeEE.
-        self.filename = re.sub(r"(e\d{2})\.?(\d{2})\.",
-                              r"\g<1>\g<2>.",
-                              self.filename,
+        self.__filename = re.sub(r"(e\d{2})\.?(\d{2})\.",
+                              r"\g<1>e\g<2>.",
+                              self.__filename,
                               flags=re.IGNORECASE)
 
         #Handle .sSS.eEE. to .sSSeEE.
-        self.filename = re.sub(r"\.(s\d+)\.(e\d+)\.",
+        self.__filename = re.sub(r"\.(s\d+)\.(e\d+)\.",
                               r".\g<1>\g<2>.",
-                              self.filename,
+                              self.__filename,
                               flags=re.IGNORECASE)
 
         #Handle eEE.eEE to eEEeEE
-        self.filename = re.sub(r"(e\d+)\.?(?=(e\d+))",
+        self.__filename = re.sub(r"(e\d+)\.?(?=(e\d+))",
                               r"\g<1>",
-                              self.filename,
+                              self.__filename,
                               flags=re.IGNORECASE)
 
 if __name__ == "__main__":
