@@ -3,8 +3,6 @@ author: Rahul Mohandas
 """
 import re
 import os
-import itertools.izip
-import itertools.islice
 
 import wareztools.scrapers.themoviedb
 
