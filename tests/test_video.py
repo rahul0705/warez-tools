@@ -69,13 +69,6 @@ class TestVideo(unittest.TestCase):
                              test_filename.lower(),
                              "{0} changed to {1}".format(test_filename.lower(),
                                                          warezfile.filename))
-            warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename.upper()))
-            warezfile.remove_group()
-            self.assertEqual(os.path.basename(warezfile.filename),
-                             test_filename.upper(),
-                             "{0} changed to {1}".format(test_filename.upper(),
-                                                         warezfile.filename))
 
     def test_remove_group_with_group(self):
         """Test removal of scene group
@@ -88,12 +81,6 @@ class TestVideo(unittest.TestCase):
             warezfile.remove_group()
             self.assertEqual(os.path.basename(warezfile.filename),
                              test_filename["correct"].lower(),
-                             "Group was not removed")
-            warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename["test"].upper()))
-            warezfile.remove_group()
-            self.assertEqual(os.path.basename(warezfile.filename),
-                             test_filename["correct"].upper(),
                              "Group was not removed")
 
     def test_fix_season_episode_format_no_change_one_episode(self):
@@ -109,13 +96,6 @@ class TestVideo(unittest.TestCase):
                              test_filename.lower(),
                              "{0} changed to {1}".format(test_filename.lower(),
                                                          warezfile.filename))
-            warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename.upper()))
-            warezfile._Video__fix_season_episode_format()
-            self.assertEqual(os.path.basename(warezfile.filename),
-                             test_filename.upper(),
-                             "{0} changed to {1}".format(test_filename.upper(),
-                                                         warezfile.filename))
 
     def test_fix_season_episode_format_no_change_two_episodes(self):
         """Test to check properly formatted files do not change
@@ -130,33 +110,6 @@ class TestVideo(unittest.TestCase):
                              test_filename.lower(),
                              "{0} changed to {1}".format(test_filename.lower(),
                                                          warezfile.filename))
-            warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename.upper()))
-            warezfile._Video__fix_season_episode_format()
-            self.assertEqual(os.path.basename(warezfile.filename),
-                             test_filename.upper(),
-                             "{0} changed to {1}".format(test_filename.upper(),
-                                                         warezfile.filename))
-
-    def test_fix_season_episode_format_not_show(self):
-        """Test to check non-shows don't get modified
-        """
-        test_filenames = ["test.movie.2015.resolution.mp4"]
-        for test_filename in test_filenames:
-            warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename.lower()))
-            warezfile._Video__fix_season_episode_format()
-            self.assertEqual(os.path.basename(warezfile.filename),
-                             test_filename.lower(),
-                             "{0} changed to {1}".format(test_filename.lower(),
-                                                         warezfile.filename))
-            warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename.upper()))
-            warezfile._Video__fix_season_episode_format()
-            self.assertEqual(os.path.basename(warezfile.filename),
-                             test_filename.upper(),
-                             "{0} changed to {1}".format(test_filename.upper(),
-                                                         warezfile.filename))
 
     def test_fix_season_episode_format_extra_dots_one_episode(self):
         """Test conversion of sSS.eEE to sSSeEE
@@ -170,12 +123,6 @@ class TestVideo(unittest.TestCase):
             self.assertEqual(os.path.basename(warezfile.filename),
                              test_filename["correct"].lower(),
                              msg="sSS.eEE was not converted to sSSeEE")
-            warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename["test"].upper()))
-            warezfile._Video__fix_season_episode_format()
-            self.assertEqual(os.path.basename(warezfile.filename),
-                             test_filename["correct"].upper(),
-                             msg="sSS.eEE was not converted to sSSeEE")
 
     def test_fix_season_episode_format_extra_dots_two_episodes(self):
         """Test conversion of sSS.eEE.eEE to sSSeEEeEE
@@ -188,12 +135,6 @@ class TestVideo(unittest.TestCase):
             warezfile._Video__fix_season_episode_format()
             self.assertEqual(os.path.basename(warezfile.filename),
                              test_filename["correct"].lower(),
-                             msg="sSS.eEE.eEE was not converted to sSSeEEeEE")
-            warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename["test"].upper()))
-            warezfile._Video__fix_season_episode_format()
-            self.assertEqual(os.path.basename(warezfile.filename),
-                             test_filename["correct"].upper(),
                              msg="sSS.eEE.eEE was not converted to sSSeEEeEE")
 
     def test_fix_season_episode_format_numbers_only_one_episode(self):
@@ -234,13 +175,6 @@ class TestVideo(unittest.TestCase):
                              test_filename.lower(),
                              "{0} changed to {1}".format(test_filename.lower(),
                              warezfile.filename))
-            warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename.upper()))
-            warezfile.remove_proper()
-            self.assertEqual(os.path.basename(warezfile.filename),
-                             test_filename.upper(),
-                             "{0} changed to {1}".format(test_filename.upper(),
-                             warezfile.filename))
 
     def test_remove_proper_with_proper(self):
         """Test the removal of proper in filename
@@ -254,12 +188,6 @@ class TestVideo(unittest.TestCase):
             self.assertEqual(os.path.basename(warezfile.filename),
                              test_filename["correct"].lower(),
                              msg="proper was not removed")
-            warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename["test"].upper()))
-            warezfile.remove_proper()
-            self.assertEqual(os.path.basename(warezfile.filename),
-                             test_filename["correct"].upper(),
-                             msg="PROPER was not removed")
 
     def test_remove_repack_no_change(self):
         """Test to check that a file with no repack does not change
@@ -272,13 +200,6 @@ class TestVideo(unittest.TestCase):
             self.assertEqual(os.path.basename(warezfile.filename),
                              test_filename.lower(),
                              "{0} changed to {1}".format(test_filename.lower(),
-                             warezfile.filename))
-            warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename.upper()))
-            warezfile.remove_repack()
-            self.assertEqual(os.path.basename(warezfile.filename),
-                             test_filename.upper(),
-                             "{0} changed to {1}".format(test_filename.upper(),
                              warezfile.filename))
 
     def test_remove_repack_with_repack(self):
@@ -293,12 +214,6 @@ class TestVideo(unittest.TestCase):
             self.assertEqual(os.path.basename(warezfile.filename),
                              test_filename["correct"].lower(),
                              msg="repack was not removed")
-            warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename["test"].upper()))
-            warezfile.remove_repack()
-            self.assertEqual(os.path.basename(warezfile.filename),
-                             test_filename["correct"].upper(),
-                             msg="REPACK was not removed")
 
     def test_remove_internal_no_change(self):
         """Test to check that a file with no internal does not change
@@ -306,18 +221,11 @@ class TestVideo(unittest.TestCase):
         test_filenames = ["test.tv.s01e01.resolution.mp4"]
         for test_filename in test_filenames:
             warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename.lower()))
+                                                test_filename.lower()))
             warezfile.remove_internal()
             self.assertEqual(os.path.basename(warezfile.filename),
                              test_filename.lower(),
                              "{0} changed to {1}".format(test_filename.lower(),
-                             warezfile.filename))
-            warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename.upper()))
-            warezfile.remove_internal()
-            self.assertEqual(os.path.basename(warezfile.filename),
-                             test_filename.upper(),
-                             "{0} changed to {1}".format(test_filename.upper(),
                              warezfile.filename))
 
     def test_remove_internal_with_internal(self):
@@ -327,17 +235,11 @@ class TestVideo(unittest.TestCase):
                            "correct":"test.tv.s01e01.resolution.mp4"}]
         for test_filename in test_filenames:
             warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename["test"].lower()))
+                                                test_filename["test"].lower()))
             warezfile.remove_internal()
             self.assertEqual(os.path.basename(warezfile.filename),
                              test_filename["correct"].lower(),
                              msg="internal was not removed")
-            warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename["test"].upper()))
-            warezfile.remove_internal()
-            self.assertEqual(os.path.basename(warezfile.filename),
-                             test_filename["correct"].upper(),
-                             msg="INTERNAL was not removed")
 
     def test_move_to_movie(self):
         """Test the move to movie directory
@@ -346,7 +248,7 @@ class TestVideo(unittest.TestCase):
                            "correct":"movie/test.movie.resolution.mp4"}]
         for test_filename in test_filenames:
             warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename["test"].lower()))
+                                                test_filename["test"].lower()))
             warezfile.move_to_movie()
             self.assertEqual(os.path.join(warezfile.path, warezfile.filename),
                              os.path.join(self.temp_dir,
@@ -360,7 +262,7 @@ class TestVideo(unittest.TestCase):
                            "correct":"tv/test.tv.s01e01.resolution.mp4"}]
         for test_filename in test_filenames:
             warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename["test"].lower()))
+                                                test_filename["test"].lower()))
             warezfile.move_to_tv()
             self.assertEqual(os.path.join(warezfile.path, warezfile.filename),
                              os.path.join(self.temp_dir,
@@ -374,7 +276,7 @@ class TestVideo(unittest.TestCase):
                            "correct":(None, None, [])}]
         for test_filename in test_filenames:
             warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename["test"].lower()))
+                                                test_filename["test"].lower()))
             show_info = warezfile.get_show_info()
             self.assertEqual(show_info,
                              test_filename["correct"],
@@ -389,7 +291,7 @@ class TestVideo(unittest.TestCase):
                            "correct":("test.tv", "01", ["01", "02"])}]
         for test_filename in test_filenames:
             warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename["test"].lower()))
+                                                test_filename["test"].lower()))
             show_info = warezfile.get_show_info()
             self.assertEqual(show_info,
                              test_filename["correct"],
@@ -405,7 +307,7 @@ class TestVideo(unittest.TestCase):
         for test_filename in test_filenames:
             wareztools.scrapers.themoviedb.TheMovieDB.ret = False
             warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename["test"].lower()))
+                                                test_filename["test"].lower()))
             show_info = warezfile.get_show_info()
             self.assertEqual(show_info,
                              test_filename["correct"],
@@ -452,7 +354,7 @@ class TestVideo(unittest.TestCase):
                            "correct":"test.tv.s01e01e02.resolution.mp4"},]
         for test_filename in test_filenames:
             warezfile = self.video(os.path.join(self.temp_dir,
-                                           test_filename["test"].lower()))
+                                                test_filename["test"].lower()))
             warezfile.remove_group()
             warezfile.remove_internal()
             warezfile.remove_proper()

@@ -3,6 +3,8 @@ author: Rahul Mohandas
 """
 import re
 import os
+import itertools.izip
+import itertools.islice
 
 import wareztools.scrapers.themoviedb
 
@@ -16,7 +18,14 @@ class Video(object):
         self.path = os.path.dirname(video)
         self.__filename = os.path.basename(os.path.splitext(video)[0])
         self.extension = os.path.splitext(video)[1]
-        self.db = wareztools.scrapers.themoviedb.TheMovieDB(Video.api_key)
+        self.db = None
+        self._get_scraper("TheMovieDB")
+
+    def _get_scraper(self, scraper_name):
+        if scraper_name == "TheMovieDB":
+            self.db = wareztools.scrapers.themoviedb.TheMovieDB(Video.api_key)
+        else:
+            raise ValueError("Scrapper not defined")
 
     @property
     def filename(self):
@@ -83,41 +92,52 @@ class Video(object):
 
     def __get_show_regex(self):
         return re.match(r"(.*)\.(s(\d{2}))((e\d{2})+)",
-                        self.__filename,
+                        self.filename,
                         flags=re.IGNORECASE)
 
-    def __fix_season_episode_format(self):
-        """Fix the show format so it match .*.sSSeEE[eEE]..*
-        """
+    def __get_name_season_episode(self):
+        #pad any one digit episodes
+        self.__filename = re.sub(r"e(\d)(?=\D)",
+                                 r"e0\g<1>",
+                                 self.__filename,
+                                 flags=re.IGNORECASE)
         if self.__get_show_regex():
             return
+        name = None
+        ending = None
+        possible_match = None
+        #find anything that matches [s][S]S[.][e]EE
+        possible_matches = re.findall(r"s\d{1,2}(?:\.?e\d{1,2})+",
+                                      self.__filename,
+                                      flags=re.IGNORECASE)
+        #if we match we trim the s, e, and . so that we get [S]SEE
+        if possible_matches:
+            possible_match = re.sub("[s|e|\.]",
+                                    "",
+                                    possible_matches[-1],
+                                    flags=re.IGNORECASE)
+        else:
+            #match [S]SEE
+            possible_matches = re.findall(r"\d{3,}",
+                                          self.__filename,
+                                          flags=re.IGNORECASE)
+            if possible_matches:
+                possible_match = possible_matches[-1]
+        #extract season and episode from [S]SEE
+        if possible_match:
+            name_end = re.match(r"(.*){0}(.*)".format(possible_matches[-1]),
+                                self.__filename,
+                                flags=re.IGNORECASE)
+            if name_end:
+                name = name_end.group(1)
+                ending = name_end.group(2)
+            season_episode = re.search(r"(\d{1,2})((?:\d{2})+)\Z",
+                                       possible_match,
+                                       flags=re.IGNORECASE)
+            if season_episode:
+                season = "s{:02d}".format(int(season_episode.group(1)))
+                episode = re.sub(r"(\d{2})",
+                                 r"e\g<1>",
+                                 season_episode.group(2))
 
-        #Handle .SEE. or .SEEEE. to .sSeEE. or .sSeEEEE.
-        self.__filename = re.sub(r"\.(\d)((\d{2}){1,2})\.",
-                              r".s\g<1>e\g<2>.",
-                              self.__filename,
-                              flags=re.IGNORECASE)
-
-        #Handle .sS?eEE. or .sS?eEE?EE. to .s0SeEE. or .s0SeEEEE.
-        self.__filename = re.sub(r"\.(s)(\d)\.?(e\d{2})\.?((\d{2})?)\.",
-                              r".\g<1>0\g<2>\g<3>\g<4>.",
-                              self.__filename,
-                              flags=re.IGNORECASE)
-
-        #Handle eEEEE. to eEEeEE.
-        self.__filename = re.sub(r"(e\d{2})\.?(\d{2})\.",
-                              r"\g<1>e\g<2>.",
-                              self.__filename,
-                              flags=re.IGNORECASE)
-
-        #Handle .sSS.eEE. to .sSSeEE.
-        self.__filename = re.sub(r"\.(s\d+)\.(e\d+)\.",
-                              r".\g<1>\g<2>.",
-                              self.__filename,
-                              flags=re.IGNORECASE)
-
-        #Handle eEE.eEE to eEEeEE
-        self.__filename = re.sub(r"(e\d+)\.?(?=(e\d+))",
-                              r"\g<1>",
-                              self.__filename,
-                              flags=re.IGNORECASE)
+                return (name, season, episode)
