@@ -18,6 +18,25 @@ class Video(object):
         self.extension = os.path.splitext(video)[1]
         self.db = None
         self._get_scraper("TheMovieDB")
+        self.decompose()
+
+    def decompose(self):
+        #find anything that matches [s][S]S[.][e]EE
+        possible_matches = re.findall(r"s\d{1,2}(?:\.?e\d{1,2})+",
+                                      self.__filename,
+                                      flags=re.IGNORECASE)
+        if not possible_matches:
+            #verify that this is a movie
+            return
+        name_end = re.match(r"(.*){0}(.*)".format(possible_matches[-1]),
+                            self.__filename,
+                            flags=re.IGNORECASE)
+        if not name_end:
+            return
+        name = name_end.group(1)
+        end = name_end.group(2)
+        return (name, end, possible_matches[-1])
+
 
     def _get_scraper(self, scraper_name):
         if scraper_name == "TheMovieDB":
