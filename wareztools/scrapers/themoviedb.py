@@ -16,10 +16,11 @@ except ImportError:
 import wareztools.scrapers.scraper
 
 class TheMovieDB(wareztools.scrapers.scraper.Scraper):
+    api_key = "fc2ba5302e694c0676d0f8667832ac83"
 
-    def __init__(self, api_key):
+    def __init__(self, api_key=None):
         if not api_key:
-            raise ValueError("Missing API key")
+            api_key = TheMovieDB.api_key
         super(TheMovieDB, self).__init__(api_key=api_key)
         self.base_url = "https://api.themoviedb.org/3"
         self.__reset_request()
