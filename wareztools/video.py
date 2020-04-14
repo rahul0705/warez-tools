@@ -85,17 +85,23 @@ class Video(WarezFile):
                         self.filename,
                         flags=re.IGNORECASE)
 
+    def __season_episode_regex(self):
+        return re.match(r"(.*)\.(s(\d{1,2}))\.?((e\d{2}\.?)+)",
+                        self.filename,
+                        flags=re.IGNORECASE)
+
     def __fix_season_episode_format(self):
         """Fix the show format so it match .*.sSSeEE[eEE]..*
         """
         if self.__get_show_regex():
             return
 
-        #Handle .SEE. or .SEEEE. to .sSeEE. or .sSeEEEE.
-        self.filename = re.sub(r"\.(\d)((\d{2}){1,2})\.",
-                              r".s\g<1>e\g<2>.",
-                              self.filename,
-                              flags=re.IGNORECASE)
+        if not self.__season_episode_regex():
+            #Handle .SEE. or .SEEEE. to .sSeEE. or .sSeEEEE.
+            self.filename = re.sub(r"\.(\d{1,2})((\d{2}){1,2})\.",
+                                  r".s\g<1>e\g<2>.",
+                                  self.filename,
+                                  flags=re.IGNORECASE)
 
         #Handle .sS?eEE. or .sS?eEE?EE. to .s0SeEE. or .s0SeEEEE.
         self.filename = re.sub(r"\.(s)(\d)\.?(e\d{2})\.?((\d{2})?)\.",

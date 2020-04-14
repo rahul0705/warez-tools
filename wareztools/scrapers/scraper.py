@@ -4,8 +4,8 @@ author: Rahul Mohandas
 
 class Scraper(object):
 
-    def __init__(self, api_key=None):
-        self.api_key = api_key
+    def __init__(self):
+        pass
 
     def get_show_id(self, name):
         raise NotImplementedError()

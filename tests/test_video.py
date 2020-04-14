@@ -118,7 +118,8 @@ class TestVideo(unittest.TestCase):
         """Test to check properly formatted files do not change
         """
         #Test correctly formatted file
-        test_filenames = ["test.tv.s01e01.resolution.mp4"]
+        test_filenames = ["test.tv.s01e01.resolution.mp4",
+                          "test.tv.with.year.2018.s01e01.resolution.mp4"]
 
         for test_filename in test_filenames:
             #----LOWER CASE TEST CASE----#
@@ -137,7 +138,8 @@ class TestVideo(unittest.TestCase):
         """Test to check properly formatted files do not change
         """
         #Test correctly formatted file
-        test_filenames = ["test.tv.s01e01e02.resolution.mp4"]
+        test_filenames = ["test.tv.s01e01e02.resolution.mp4",
+                          "test.tv.with.year.2018.s01e01e02.resolution.mp4"]
 
         for test_filename in test_filenames:
             #----LOWER CASE TEST CASE----#
@@ -177,6 +179,10 @@ class TestVideo(unittest.TestCase):
                            {
                              'test' : 'test.tv.s01.e01.resolution.mp4',
                              'correct' : 'test.tv.s01e01.resolution.mp4'
+                           },
+                           {
+                             'test' : 'test.tv.with.year.2018.s01.e01.resolution.mp4',
+                             'correct' : 'test.tv.with.year.2018.s01e01.resolution.mp4'
                            }
                          ]
 
@@ -212,6 +218,10 @@ class TestVideo(unittest.TestCase):
                            {
                              'test' : 'test.tv.s01.e01.e02.resolution.mp4',
                              'correct' : 'test.tv.s01e01e02.resolution.mp4'
+                           },
+                           {
+                             'test' : 'test.tv.with.year.2018.s01.e01.e02.resolution.mp4',
+                             'correct' : 'test.tv.with.year.2018.s01e01e02.resolution.mp4'
                            }
                          ]
 
@@ -247,6 +257,14 @@ class TestVideo(unittest.TestCase):
                            {
                              'test' : 'test.tv.101.resolution.mp4',
                              'correct' : 'test.tv.s01e01.resolution.mp4'
+                           },
+                           {
+                             'test' : 'test.tv.1001.resolution.mp4',
+                             'correct' : 'test.tv.s10e01.resolution.mp4'
+                           },
+                           {
+                             'test' : 'test.tv.with.year.2018.101.resolution.mp4',
+                             'correct' : 'test.tv.with.year.2018.s01e01.resolution.mp4'
                            }
                          ]
 
@@ -270,6 +288,10 @@ class TestVideo(unittest.TestCase):
                            {
                              'test' : 'test.tv.10102.resolution.mp4',
                              'correct' : 'test.tv.s01e01e02.resolution.mp4'
+                           },
+                           {
+                             'test' : 'test.tv.with.year.2018.10102.resolution.mp4',
+                             'correct' : 'test.tv.with.year.2018.s01e01e02.resolution.mp4'
                            }
                          ]
 
@@ -565,52 +587,52 @@ class TestVideo(unittest.TestCase):
         """
         test_filenames = [
                              {
-                               'test' : 'test.tv.s01.e01.resolution.internal-GROUP.mp4',
-                               'correct' : 'test.tv.s01e01.resolution.mp4'
+                               'test' : 'test.tv.with.year.2018.s01.e01.resolution.internal-GROUP.mp4',
+                               'correct' : 'test.tv.with.year.2018.s01e01.resolution.mp4'
                              },
                              {
-                               "test" : "test.tv.s01.e01.resolution.repack-GROUP.mp4",
-                               "correct" : "test.tv.s01e01.resolution.mp4"
+                               "test" : "test.tv.with.year.2018.s01.e01.resolution.repack-GROUP.mp4",
+                               "correct" : "test.tv.with.year.2018.s01e01.resolution.mp4"
                              },
                              {
-                               "test" : "test.tv.s01.e01.resolution.proper-GROUP.mp4",
-                               "correct" : "test.tv.s01e01.resolution.mp4"
+                               "test" : "test.tv.with.year.2018.s01.e01.resolution.proper-GROUP.mp4",
+                               "correct" : "test.tv.with.year.2018.s01e01.resolution.mp4"
                              },
                              {
-                               "test" : "test.tv.s01.e01.e02.resolution.internal-GROUP.mp4",
-                               "correct" : "test.tv.s01e01e02.resolution.mp4"
+                               "test" : "test.tv.with.year.2018.s01.e01.e02.resolution.internal-GROUP.mp4",
+                               "correct" : "test.tv.with.year.2018.s01e01e02.resolution.mp4"
                              },
                              {
-                               "test" : "test.tv.s01.e01.e02.resolution.repack-GROUP.mp4",
-                               "correct" : "test.tv.s01e01e02.resolution.mp4"
+                               "test" : "test.tv.with.year.2018.s01.e01.e02.resolution.repack-GROUP.mp4",
+                               "correct" : "test.tv.with.year.2018.s01e01e02.resolution.mp4"
                              },
                              {
-                               "test" : "test.tv.s01.e01.e02.resolution.proper-GROUP.mp4",
-                               "correct" : "test.tv.s01e01e02.resolution.mp4"
+                               "test" : "test.tv.with.year.2018.s01.e01.e02.resolution.proper-GROUP.mp4",
+                               "correct" : "test.tv.with.year.2018.s01e01e02.resolution.mp4"
                              },
                              {
-                               "test" : "test.tv.101.resolution.internal-GROUP.mp4",
-                               "correct" : "test.tv.s01e01.resolution.mp4"
+                               "test" : "test.tv.with.year.2018.101.resolution.internal-GROUP.mp4",
+                               "correct" : "test.tv.with.year.2018.s01e01.resolution.mp4"
                              },
                              {
-                               "test" : "test.tv.101.resolution.repack-GROUP.mp4",
-                               "correct" : "test.tv.s01e01.resolution.mp4"
+                               "test" : "test.tv.with.year.2018.101.resolution.repack-GROUP.mp4",
+                               "correct" : "test.tv.with.year.2018.s01e01.resolution.mp4"
                              },
                              {
-                               "test" : "test.tv.101.resolution.proper-GROUP.mp4",
-                               "correct" : "test.tv.s01e01.resolution.mp4"
+                               "test" : "test.tv.with.year.2018.101.resolution.proper-GROUP.mp4",
+                               "correct" : "test.tv.with.year.2018.s01e01.resolution.mp4"
                              },
                              {
-                               "test" : "test.tv.10102.resolution.internal-GROUP.mp4",
-                               "correct" : "test.tv.s01e01e02.resolution.mp4"
+                               "test" : "test.tv.with.year.2018.10102.resolution.internal-GROUP.mp4",
+                               "correct" : "test.tv.with.year.2018.s01e01e02.resolution.mp4"
                              },
                              {
-                               "test" : "test.tv.10102.resolution.repack-GROUP.mp4",
-                               "correct" : "test.tv.s01e01e02.resolution.mp4"
+                               "test" : "test.tv.with.year.2018.10102.resolution.repack-GROUP.mp4",
+                               "correct" : "test.tv.with.year.2018.s01e01e02.resolution.mp4"
                              },
                              {
-                               "test" : "test.tv.10102.resolution.proper-GROUP.mp4",
-                               "correct" : "test.tv.s01e01e02.resolution.mp4"
+                               "test" : "test.tv.with.year.2018.10102.resolution.proper-GROUP.mp4",
+                               "correct" : "test.tv.with.year.2018.s01e01e02.resolution.mp4"
                              }
                          ]
 
